@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Player Movement")]
     [SerializeField] private float _speed = 5f;
+
+    [Header("Player Shooting")]
+    [SerializeField] private GameObject laserPrefab;
+    [SerializeField] private float fireRate = .25f;
+    private float canFire = 0f;
+
 
     void Start()
     {
@@ -14,6 +21,20 @@ public class Player : MonoBehaviour
     void Update()
     {
         PlayerMovement();
+        PlayerShooting();
+    }
+
+    // player shooting method
+    void PlayerShooting()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (Time.time > canFire)
+            {
+                Instantiate(laserPrefab, transform.position + new Vector3(0, .88f, 0), Quaternion.identity);
+                canFire = Time.time + fireRate;
+            }
+        }
     }
 
     void PlayerMovement()
