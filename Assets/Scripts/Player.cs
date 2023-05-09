@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float fireRate = .25f;
     private float canFire = 0f;
     public bool canTripleShot = false;
+    public bool canSpeedBoost = false;
 
 
     void Start()
@@ -53,8 +54,18 @@ public class Player : MonoBehaviour
         var verticalInput = Input.GetAxis("Vertical");
 
         // make player move
-        transform.Translate(Vector2.right * Time.deltaTime * _speed * horizontalInput);
-        transform.Translate(Vector2.up * Time.deltaTime * _speed * verticalInput);
+        if (canSpeedBoost)
+        {
+            // speed boost power
+            transform.Translate(Vector2.right * Time.deltaTime * 1.5f * _speed * horizontalInput);
+            transform.Translate(Vector2.up * Time.deltaTime * 1.5f * _speed * verticalInput);
+        }
+        else
+        {
+            // normal movement
+            transform.Translate(Vector2.right * Time.deltaTime * _speed * horizontalInput);
+            transform.Translate(Vector2.up * Time.deltaTime * _speed * verticalInput);
+        }
 
         // make player bound on y axis
         if (transform.position.y > 0)
@@ -82,6 +93,19 @@ public class Player : MonoBehaviour
     {
         canTripleShot = true;
         StartCoroutine(TripleShotPowerDown());
+    }
+    // speed boost enable method
+    public void SpeedBoostPowerupOn()
+    {
+        canSpeedBoost = true;
+        StartCoroutine(SpeedBoostPowerDown());
+    }
+
+    // speed boost disable coroutine
+    IEnumerator SpeedBoostPowerDown()
+    {
+        yield return new WaitForSeconds(5f);
+        canSpeedBoost = false;
     }
 
     // triple shot disable coroutine
