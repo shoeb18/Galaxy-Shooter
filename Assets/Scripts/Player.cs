@@ -14,10 +14,12 @@ public class Player : MonoBehaviour
     private float canFire = 0f;
     public bool canTripleShot = false;
     public bool canSpeedBoost = false;
+    public bool shieldEnable = false;
 
     [Header("Player Health")]
     [SerializeField] private int lives = 3;
     [SerializeField] private GameObject explosion;
+    [SerializeField] private GameObject shield;
 
 
     void Start()
@@ -34,6 +36,11 @@ public class Player : MonoBehaviour
     // player damage
     public void TakeDamage()
     {
+        if (shieldEnable)
+        {
+            return;
+        }
+
         lives--;
         if (lives <= 0)
         {
@@ -116,7 +123,21 @@ public class Player : MonoBehaviour
         canSpeedBoost = true;
         StartCoroutine(SpeedBoostPowerDown());
     }
+    // player shield method
+    public void PlayerShieldOn()
+    {
+        shieldEnable = true;
+        shield.SetActive(true);
+        StartCoroutine(PlayerShieldPowerDown());
+    }
 
+    // player shield routine
+    IEnumerator PlayerShieldPowerDown()
+    {
+        yield return new WaitForSeconds(5f);
+        shieldEnable = false;
+        shield.SetActive(false);
+    }
     // speed boost disable coroutine
     IEnumerator SpeedBoostPowerDown()
     {

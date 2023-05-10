@@ -36,6 +36,7 @@ public class powerup : MonoBehaviour
                 else if (powerupID == 2)
                 {
                     // activate protect shield
+                    player.PlayerShieldOn();
                 }
 
             }
