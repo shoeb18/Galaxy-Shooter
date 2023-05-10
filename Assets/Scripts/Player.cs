@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
     // player shooting method
     void PlayerShooting()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             if (Time.time > canFire)
             {
