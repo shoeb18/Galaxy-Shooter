@@ -6,6 +6,12 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private GameObject explosionEffect;
+    private UIManager uIManager;
+
+    private void Start()
+    {
+        uIManager = GameObject.FindObjectOfType<UIManager>();
+    }
 
     void Update()
     {
@@ -37,6 +43,8 @@ public class Enemy : MonoBehaviour
         {
             Destroy(this.gameObject);
             Destroy(other.gameObject);
+            // adding score by 10
+            uIManager.UpdateScore(10);
         }
 
         // instantiating explosion effect 

@@ -21,10 +21,19 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject explosion;
     [SerializeField] private GameObject shield;
 
+    private UIManager uIManager;
+    private GameManager gameManager;
+    private SpawnManager spawnManager;
+
 
     void Start()
     {
+        uIManager = GameObject.FindObjectOfType<UIManager>();
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+        spawnManager = GameObject.FindObjectOfType<SpawnManager>();
+        uIManager.UpdateLives(lives);
 
+        spawnManager.SpawnRoutines();
     }
 
     void Update()
@@ -42,10 +51,14 @@ public class Player : MonoBehaviour
         }
 
         lives--;
+        uIManager.UpdateLives(lives);
+
         if (lives <= 0)
         {
             GameObject temp = Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(temp, 2);
+            uIManager.ShowTitleScreen();
+            gameManager.gameOver = true;
             Destroy(this.gameObject);
         }
     }

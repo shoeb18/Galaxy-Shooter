@@ -126,3 +126,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   explosionEffect: {fileID: 2261414833184848335, guid: 7a2456bc1c2b105408799ffda5ceb673, type: 3}
+  uIManager: {fileID: 7164997106957391876, guid: e7c1249dc5344764bbba0688dfb6cbca, type: 3}

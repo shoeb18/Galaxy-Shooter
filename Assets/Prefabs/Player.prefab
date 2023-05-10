@@ -215,6 +215,7 @@ MonoBehaviour:
   lives: 3
   explosion: {fileID: 8224408276935599018, guid: cabe68dfe4f22564b81f562204da80ff, type: 3}
   shield: {fileID: 565744000}
+  uIManager: {fileID: 0}
 --- !u!61 &5332941405178908311
 BoxCollider2D:
   m_ObjectHideFlags: 0
