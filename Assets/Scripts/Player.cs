@@ -24,6 +24,10 @@ public class Player : MonoBehaviour
     private UIManager uIManager;
     private GameManager gameManager;
     private SpawnManager spawnManager;
+    private AudioSource audioSource;
+
+    [SerializeField] private GameObject[] engineFailure;
+    private int hitcount = 0;
 
 
     void Start()
@@ -31,9 +35,12 @@ public class Player : MonoBehaviour
         uIManager = GameObject.FindObjectOfType<UIManager>();
         gameManager = GameObject.FindObjectOfType<GameManager>();
         spawnManager = GameObject.FindObjectOfType<SpawnManager>();
-        uIManager.UpdateLives(lives);
+        audioSource = GetComponent<AudioSource>();
 
+        uIManager.UpdateLives(lives);
         spawnManager.SpawnRoutines();
+
+        hitcount = 0;
     }
 
     void Update()
@@ -51,7 +58,19 @@ public class Player : MonoBehaviour
         }
 
         lives--;
+        hitcount++;
         uIManager.UpdateLives(lives);
+
+        // player ship engine failure effect
+        if (hitcount == 1)
+        {
+            engineFailure[0].SetActive(true);
+        }
+        else if (hitcount == 2)
+        {
+            engineFailure[1].SetActive(true);
+        }
+
 
         if (lives <= 0)
         {
@@ -70,6 +89,8 @@ public class Player : MonoBehaviour
         {
             if (Time.time > canFire)
             {
+                audioSource.Play();
+
                 if (canTripleShot)
                 {
                     Instantiate(tripleShotLaser, transform.position + new Vector3(0, .88f, 0), Quaternion.identity);

@@ -7,10 +7,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private GameObject explosionEffect;
     private UIManager uIManager;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip explosionSound;
 
     private void Start()
     {
         uIManager = GameObject.FindObjectOfType<UIManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -36,6 +39,7 @@ public class Enemy : MonoBehaviour
             {
                 player.TakeDamage();
             }
+            AudioSource.PlayClipAtPoint(explosionSound, Camera.main.transform.position);
             Destroy(this.gameObject);
         }
         // checking player laser collision
@@ -45,6 +49,7 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
             // adding score by 10
             uIManager.UpdateScore(10);
+            AudioSource.PlayClipAtPoint(explosionSound, Camera.main.transform.position);
         }
 
         // instantiating explosion effect 

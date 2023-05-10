@@ -19,12 +19,14 @@ public class UIManager : MonoBehaviour
     public void HideTitleScreen()
     {
         titleScreen.SetActive(false);
-        scoreText.text = "Score : 0";
+        score = 0;
+        scoreText.text = "Score : " + score;
     }
 
     public void UpdateLives(int currentLives)
     {
-        lives.sprite = livesSprite[currentLives];
+        if (currentLives >= 0)
+            lives.sprite = livesSprite[currentLives];
     }
 
     public void UpdateScore(int scoreVal)
