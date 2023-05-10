@@ -15,6 +15,10 @@ public class Player : MonoBehaviour
     public bool canTripleShot = false;
     public bool canSpeedBoost = false;
 
+    [Header("Player Health")]
+    [SerializeField] private int lives = 3;
+    [SerializeField] private GameObject explosion;
+
 
     void Start()
     {
@@ -25,6 +29,18 @@ public class Player : MonoBehaviour
     {
         PlayerMovement();
         PlayerShooting();
+    }
+
+    // player damage
+    public void TakeDamage()
+    {
+        lives--;
+        if (lives <= 0)
+        {
+            GameObject temp = Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(temp, 2);
+            Destroy(this.gameObject);
+        }
     }
 
     // player shooting method
