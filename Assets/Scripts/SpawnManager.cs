@@ -6,8 +6,14 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject enemy;
     [SerializeField] private GameObject[] powerups;
+    private GameManager gameManager;
 
     private void Start()
+    {
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+    }
+
+    public void SpawnRoutines()
     {
         StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnPowerups());
@@ -15,7 +21,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemy()
     {
-        while (FindObjectOfType<Player>() != null)
+        while (gameManager.gameOver == false)
         {
             Instantiate(enemy, new Vector3(Random.Range(-7, 7), 7), Quaternion.identity);
             yield return new WaitForSeconds(5f);
@@ -24,7 +30,7 @@ public class SpawnManager : MonoBehaviour
     }
     IEnumerator SpawnPowerups()
     {
-        while (FindObjectOfType<Player>() != null)
+        while (gameManager.gameOver == false)
         {
             var randPower = Random.Range(0, powerups.Length);
             Instantiate(powerups[randPower], new Vector3(Random.Range(-7, 7), 7), Quaternion.identity);
